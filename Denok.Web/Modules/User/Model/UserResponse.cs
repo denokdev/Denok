@@ -13,6 +13,7 @@ namespace Denok.Web.Modules.User.Model
             Id = user.Id;
             Username = user.Username;
             Email = user.Email;
+            PhoneNumber = user.PhoneNumber;
 
             CreatedAt = user.CreatedAt;
             CreatedBy = user.CreatedBy;
@@ -26,5 +27,8 @@ namespace Denok.Web.Modules.User.Model
 
         [JsonPropertyName("email")]
         public string Email { get; set; }
+
+        [JsonPropertyName("phoneNumber")]
+        public string PhoneNumber { get; set; }
     }
 }

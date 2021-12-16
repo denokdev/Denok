@@ -42,9 +42,10 @@ namespace Denok.Web.Modules.User.Delivery
             var user = findByIdResult.Get();
             if (viewModel == null) 
             {
-                viewModel = new Modules.Link.Model.GenerateViewModel();
-                viewModel.Username = user.Username; 
+                viewModel = new Modules.Link.Model.GenerateViewModel(); 
             }
+
+            viewModel.Username = user.Username;
             
             return View(viewModel);
         }
@@ -110,6 +111,28 @@ namespace Denok.Web.Modules.User.Delivery
             var user = findByIdResult.Get();
             var viewModel = new Modules.Link.Model.GenerateViewModel();
             viewModel.Username = user.Username;
+            
+            return View(viewModel);
+        }
+
+        public async Task<IActionResult> Profile()
+        {
+            if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
+            {
+                return RedirectToAction("Index", "Home");  
+            }
+
+            var userId = HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey);
+            var findByIdResult = await _userUsecase.GetProfile(userId);
+            if (findByIdResult.IsError())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = findByIdResult.Get();
+            var viewModel = new Modules.Link.Model.GenerateViewModel();
+            viewModel.Username = user.Username;
+            viewModel.Profile = user;
             
             return View(viewModel);
         }

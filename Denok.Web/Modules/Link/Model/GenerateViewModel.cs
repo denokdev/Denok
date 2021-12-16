@@ -10,6 +10,8 @@ namespace Denok.Web.Modules.Link.Model
     {
         public string Username { get; set; }
 
+        public Modules.User.Model.UserResponse Profile { get; set; }
+
         public GenerateRequest GenerateRequest { get; set; }
 
         public string GeneratedLink { get; set; }
