@@ -8,6 +8,8 @@ namespace Denok.Web.Modules.Link.Repository
     public interface ILinkRepository
     {
         Task<Result<Model.Link, string>> Save(Model.Link user);
+
+        Task<Result<Model.Link, string>> Update(string generatedLink, Model.Link user);
         
         Task<Result<Model.Link, string>> FindById(string id);
 

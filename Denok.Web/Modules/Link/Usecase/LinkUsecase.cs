@@ -18,6 +18,8 @@ namespace Denok.Web.Modules.Link.Usecase
 
         Task<Result<Model.LinkListView, string>> GetLinks(Model.LinkFilter linkFilter);
 
+        Task<Result<Model.LinkResponse, string>> UpTotalVisits(string generatedLink);
+
     }
 
 
@@ -105,6 +107,27 @@ namespace Denok.Web.Modules.Link.Usecase
             linkListView.Meta = new Lib.Shared.Meta((int)linkFilter.Page, (int)linkFilter.Limit, (int)countResult.Get());
 
             return Result<Model.LinkListView, string>.From(linkListView, null);
+        }
+
+        public async Task<Result<Model.LinkResponse, string>> UpTotalVisits(string generatedLink)
+        {
+            var findByResult = await _linkRepository.FindByGeneratedLink(generatedLink);
+            if (findByResult.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, findByResult.Error());
+            }
+
+            var link = findByResult.Get();
+            link.TotalVisits = link.TotalVisits + 1;
+            Console.WriteLine(String.Format("Link {0} | Total visits : {1}", generatedLink, link.TotalVisits));
+            var updateResults = await _linkRepository.Update(generatedLink, link);
+            if (updateResults.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, updateResults.Error());
+            }
+
+            var linkResponse = new Model.LinkResponse(link);
+            return Result<Model.LinkResponse, string>.From(linkResponse, null);
         }
 
     }

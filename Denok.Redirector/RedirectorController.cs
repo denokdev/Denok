@@ -35,6 +35,12 @@ namespace Denok.Redirector.Controller
             }
 
             var link = findByCodeResult.Get();
+            var upTotalVisitResult = await _linkUsecase.UpTotalVisits(code);
+            if (upTotalVisitResult.IsError())
+            {
+                return RedirectPermanent(domainNotFound);
+            }
+
             var redirectTo = link.OriginalLink;
 
             return RedirectPermanent(redirectTo);

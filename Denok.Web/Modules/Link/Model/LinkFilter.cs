@@ -10,7 +10,7 @@ namespace Denok.Web.Modules.Link.Model
         {
             Page = 1;
             Limit = 5;
-            Sort = "ASC";
+            Sort = "DESC";
         }
     }
 }

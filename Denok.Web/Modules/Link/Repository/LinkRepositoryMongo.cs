@@ -118,5 +118,18 @@ namespace Denok.Web.Modules.Link.Repository
                 return Result<Model.Link, string>.From(null, e.ToString());
             }
         }
+
+        public async Task<Result<Model.Link, string>> Update(string generatedLink, Model.Link link)
+        {
+            try 
+            {
+                await _linkCollection.ReplaceOneAsync(
+                    x => x.GeneratedLink.ToUpper() == generatedLink.ToUpper(), link);
+                return Result<Model.Link, string>.From(link, null);
+            } catch(Exception e)
+            {
+                return Result<Model.Link, string>.From(null, e.ToString());
+            }
+        }
     }
 }
