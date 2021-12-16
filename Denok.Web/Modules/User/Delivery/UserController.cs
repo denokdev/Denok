@@ -40,7 +40,6 @@ namespace Denok.Web.Modules.User.Delivery
             }
 
             var user = findByIdResult.Get();
-            Console.WriteLine(String.Format("User Id : {0}", HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey)));
             if (viewModel == null) 
             {
                 viewModel = new Modules.Link.Model.GenerateViewModel();

@@ -25,6 +25,7 @@
                     <tr>
                         <th>Original Link</th>
                         <th>Generated Link</th>
+                        <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
                         <th>Created At</th>
                         <th>Created By</th>
@@ -34,6 +35,7 @@
                     <tr>
                         <th>Original Link</th>
                         <th>Generated Link</th>
+                        <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
                         <th>Created At</th>
                         <th>Created By</th>
@@ -44,7 +46,11 @@
                     {
                         <tr>
                             <td>@item.OriginalLink</td>
-                            <td>@item.GeneratedLink</td>
+                            @{
+                                var cpSelector = String.Format("l{0}", item.Id);
+                            }
+                            <td><label id="@cpSelector">@item.GeneratedLink</label></td>
+                            <td><button class="btn btn-outline-primary" type="button" data-clipboard-action="copy" data-clipboard-target="#@cpSelector">Cp</button></td>
                             <td>@item.TotalVisits</td>
                             <td>@item.CreatedAt</td>
                             <td>@item.CreatedBy</td>

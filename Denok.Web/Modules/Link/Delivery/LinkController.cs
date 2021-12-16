@@ -27,7 +27,7 @@ namespace Denok.Web.Modules.Link.Delivery
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Generate([Bind("OriginalLink")] Modules.Link.Model.GenerateRequest generateRequest)
+        public async Task<IActionResult> Generate([Bind("OriginalLink,Description")] Modules.Link.Model.GenerateRequest generateRequest)
         {
             if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
             {
@@ -58,8 +58,6 @@ namespace Denok.Web.Modules.Link.Delivery
 
                 var domainName = Config.AppConfig.DomainName;
                 var outputLink = Lib.LinkGenerator.LinkGenerator.Generate();
-                Console.WriteLine(String.Format("Original Link : {0}", uriResult.AbsoluteUri));
-                Console.WriteLine(String.Format("Output Link : {0}", outputLink));
                 viewModel.GeneratedLink = String.Format("{0}/{1}", domainName, outputLink);
 
                 // save
@@ -67,6 +65,10 @@ namespace Denok.Web.Modules.Link.Delivery
                 linkRequest.CreatedBy = user.Username;
                 linkRequest.OriginalLink = uriResult.AbsoluteUri;
                 linkRequest.GeneratedLink = outputLink;
+                if (generateRequest.Description != null)
+                {
+                    linkRequest.Description = generateRequest.Description;
+                }
                 linkRequest.TotalVisits = 0;
 
                 var saveLinkResult = await _linkUsecase.CreateLink(linkRequest);

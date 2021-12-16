@@ -50,6 +50,17 @@ namespace Denok.Redirector
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Denok.Redirector v1"));
             }
 
+            app.Use(async (context, next) =>
+            {
+                await next();
+                if (context.Response.StatusCode == 404)
+                {
+                    var redirectTo = Denok.Web.Config.AppConfig.DomainNotFound;
+                    context.Response.Redirect(redirectTo);
+                    return;
+                }
+            });
+
             // app.UseHttpsRedirection();
 
             app.UseRouting();

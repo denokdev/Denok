@@ -10,6 +10,9 @@ namespace Denok.Web.Modules.Link.Model
         [Required(ErrorMessage = "original link is required")]
         [JsonPropertyName("originalLink")]
         public string OriginalLink { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
         
     }
 }
