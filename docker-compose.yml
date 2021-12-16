@@ -1,0 +1,151 @@
+version: '3'
+
+services:
+  # netapi:
+  #   build:
+  #     context: .
+  #   ports:
+  #     - "9002:9002"
+  #   depends_on:
+  #     - cloudstorage
+  #     - mongodb
+  #     - redis
+  #     - kafka
+  #     - logstash
+  #     - elasticsearch
+  #   networks:
+  #     - web
+  # cloudstorage:
+  #   # minio set bucket public permission
+  #   # create config with alias $ mc config host add minio-local http://localhost:9000 minion 123456789
+  #   # show buckets $ mc ls minio-local
+  #   # set my-bucket-one bucket to public $ mc policy set public minio-local/my-bucket-one
+  #   image: "minio/minio"
+  #   command: server /data
+  #   volumes:
+  #     - "./volumes/minio:/data"
+  #   environment:
+  #     MINIO_ACCESS_KEY: netapi
+  #     MINIO_SECRET_KEY: netapisecret
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - web
+
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    environment:
+      - MONGO_DATA_DIR=/data/db
+      - MONGO_LOG_DIR=/dev/null
+      - MONGO_INITDB_DATABASE=denokdb
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - ./scripts/001_users.js:/docker-entrypoint-initdb.d/001_users.js:ro
+      - ./volumes/mongodb:/data/db
+    # networks:
+    #   - web
+    ports:
+      - 27017:27017
+    command: mongod --auth
+
+  # postgres:
+  #   container_name: postgres
+  #   working_dir: /usr/app
+  #   volumes:
+  #     - ./volumes/postgres_data:/var/lib/postgresql/data
+  #   image: postgres
+  #   environment:
+  #     - POSTGRES_USER=netapi
+  #     - POSTGRES_PASSWORD=netapi1234
+  #     - POSTGRES_DB=netapi
+  #     - PGDATA=/tmp
+  #   ports:
+  #     - "5432:5432"
+  #   networks:
+  #     - web
+
+  # redis:
+  #   image: "redis:3.0-alpine"
+  #   command: redis-server --requirepass devpass
+  #   volumes:
+  #     - "./volumes/redis:/data"
+  #   ports:
+  #     - "6379:6379"
+  #   networks:
+  #     - web
+  # zookeeper:
+  #   image: wurstmeister/zookeeper
+  #   ports:
+  #     - "2181:2181"
+  #   networks:
+  #     - web
+#   kafka:
+#     image: wurstmeister/kafka
+#     ports:
+#       - "9092:9092"
+#     depends_on:
+#       - zookeeper
+#     environment:
+#       KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+#       KAFKA_CREATE_TOPICS: "topic-one"
+#       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#       KAFKA_ZOOKEEPER_TIMEOUT_MS: 36000
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock
+#     networks:
+#       - web
+
+#   # ELK
+  # elasticsearch:
+  #   build:
+  #     context: elk/elasticsearch
+  #     args:
+  #       ELK_VERSION: $ELK_VERSION
+  #   volumes:
+  #     - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+  #     - ./elk/elasticsearch/esdata:/usr/share/elasticsearch/data
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   environment:
+  #     ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #     ELASTIC_PASSWORD: devpass
+  #   networks:
+  #     - web
+
+#   logstash:
+#     build:
+#       context: elk/logstash
+#       args:
+#         ELK_VERSION: $ELK_VERSION
+#     volumes:
+#       - ./elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+#       - ./elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
+#     ports:
+#       - "5000:5000"
+#       - "9600:9600"
+#     environment:
+#       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+#     networks:
+#       - web
+#     depends_on:
+#       - elasticsearch
+
+#   kibana:
+#     build:
+#       context: elk/kibana
+#       args:
+#         ELK_VERSION: $ELK_VERSION
+#     volumes:
+#       - ./elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+#     ports:
+#       - "5601:5601"
+#     networks:
+#       - web
+#     depends_on:
+#       - elasticsearch
+# networks:
+#   web:
+#     driver: bridge
