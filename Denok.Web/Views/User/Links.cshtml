@@ -1,0 +1,100 @@
+@model Denok.Web.Modules.Link.Model.GenerateViewModel
+
+@{
+    ViewData["Title"] = "Links";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Link Data</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Generated Link Data</h6>
+    </div>
+    <div class="card-body">
+        @if (@Model.ErrorMessage != null)
+        {
+            <div class="mb-3">
+                <code>@Model.ErrorMessage</code>
+            </div>
+        }
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Original Link</th>
+                        <th>Generated Link</th>
+                        <th>Total Visits</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Original Link</th>
+                        <th>Generated Link</th>
+                        <th>Total Visits</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.LinkListView.LinkData)
+                    {
+                        <tr>
+                            <td>@item.OriginalLink</td>
+                            <td>@item.GeneratedLink</td>
+                            <td>@item.TotalVisits</td>
+                            <td>@item.CreatedAt</td>
+                            <td>@item.CreatedBy</td>
+                        </tr> 
+                    }
+                </tbody>
+            </table>
+        </div>
+        <nav aria-label="Page navigation example">
+            @if (@Model.LinkListView.Meta.TotalPage > 0)
+            {
+                <ul class="pagination">
+                @if (@Model.LinkListView.Meta.Page == 1)
+                {
+                    <li class="page-item disable"><a class="page-link">First</a></li>
+                } else {
+                    <li class="page-item"><a class="page-link" asp-controller="User" asp-action="Links" asp-route-page="1">First</a></li>
+                }
+
+                @{ var i = @Model.LinkListView.Meta.Page > 5 ? @Model.LinkListView.Meta.Page - 1 : 1;} 
+                @if (i != 1) 
+                {
+                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                }
+
+                @{
+                    for(;i <= @Model.LinkListView.Meta.Page + 4 && i < @Model.LinkListView.Meta.TotalPage; i++)
+                    {
+                        if (i == @Model.LinkListView.Meta.Page)
+                        {
+                            <li class="page-item active"><a class="page-link">@i</a></li>
+                        } else 
+                        {
+                            <li class="page-item"><a class="page-link" asp-controller="User" asp-action="Links" asp-route-page="@i">@i</a></li>
+                        }
+                        if (i == @Model.LinkListView.Meta.Page + 4 && i < @Model.LinkListView.Meta.TotalPage)
+                        {
+                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                        }
+                    }
+                }
+                @if (@Model.LinkListView.Meta.Page == @Model.LinkListView.Meta.TotalPage)
+                {
+                    <li class="page-item disable"><a class="page-link">Last</a></li>
+                } else 
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="User" asp-action="Links" asp-route-page="@Model.LinkListView.Meta.TotalPage">Last</a></li>
+                }
+                </ul>
+            }
+        </nav>
+    </div>
+</div>

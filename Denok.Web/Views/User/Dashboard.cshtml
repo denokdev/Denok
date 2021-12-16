@@ -1,0 +1,40 @@
+@model Denok.Web.Modules.Link.Model.GenerateViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-1 text-gray-800">Generate your beautiful short link</h1>
+
+<!-- Grow In Utility -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Link Generator</h6>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <code>Paste your original link here</code>
+        </div>
+        <form class="user" asp-action="Generate" asp-controller="Link" method="post">
+            <div class="form-group">
+                <input asp-for="@Model.GenerateRequest.OriginalLink" type="text" name="originalLink" class="form-control"
+                    id="originalLink" placeholder="your original link"/>
+                <span asp-validation-for="@Model.GenerateRequest.OriginalLink" class="text-danger"></span>
+            </div>
+            <input type="submit" value="Generate" class="btn btn-primary btn-block"/>
+        </form>
+        <hr>
+        <div class="input-group mb-3">
+            <input class="form-control" type="text" value="@if (@Model.GeneratedLink != null){@Model.GeneratedLink}" id="outputLink" aria-label="Output Link" readonly/>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" data-clipboard-action="copy" data-clipboard-target="#outputLink">Copy</button>
+            </div>
+        </div>
+        @if (@Model.ErrorMessage != null)
+        {
+            <hr>
+            <span class="text-danger">@Model.ErrorMessage</span>
+        }
+    </div>
+</div>
