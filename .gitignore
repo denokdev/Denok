@@ -26,3 +26,5 @@ app/
 
 volumes/
 *.db
+denokred/
+denokweb/
