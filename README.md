@@ -2,7 +2,7 @@
 
 A self hosted Link Shortener built with `dotnet`
 
-[<img src="./assets/denok_arch.png" width="300">](https://github.com/wuriyanto48/kece)
+[<img src="./assets/denok_arch.png" width="400">](https://github.com/wuriyanto48/kece)
 <br/><br/>
 
 ### Requirements
