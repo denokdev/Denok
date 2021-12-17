@@ -59,12 +59,15 @@
                             
                             @{
                                 string description = "";
-                                if (item.Description.Length > 10) 
+                                if (item.Description != null)
                                 {
-                                    description = String.Format("{0}...", item.Description.Substring(0, 9));
-                                } else 
-                                {
-                                    description = item.Description;
+                                    if (item.Description.Length > 10) 
+                                    {
+                                        description = String.Format("{0}...", item.Description.Substring(0, 9));
+                                    } else 
+                                    {
+                                        description = item.Description;
+                                    }
                                 }
                                 <td>@description</td>
                             }

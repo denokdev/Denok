@@ -30,5 +30,15 @@ namespace Denok.Web.Utils
 
             return false;
         }
+
+        public static bool HasInvalidUriChar(string input)
+        {
+            var regexItem = new Regex("^[a-zA-Z0-9-_]*$");
+            if (!regexItem.IsMatch(input))
+            {
+                return true;
+            }
+            return false;
+        }	
     }
 }

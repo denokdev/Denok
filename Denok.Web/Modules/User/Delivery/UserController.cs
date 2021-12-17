@@ -50,6 +50,31 @@ namespace Denok.Web.Modules.User.Delivery
             return View(viewModel);
         }
 
+        public async Task<IActionResult> Custom(Modules.Link.Model.GenerateViewModel viewModel)
+        {
+            if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
+            {
+                return RedirectToAction("Index", "Home");  
+            }
+
+            var userId = HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey);
+            var findByIdResult = await _userUsecase.GetProfile(userId);
+            if (findByIdResult.IsError())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = findByIdResult.Get();
+            if (viewModel == null) 
+            {
+                viewModel = new Modules.Link.Model.GenerateViewModel(); 
+            }
+
+            viewModel.Username = user.Username;
+            
+            return View(viewModel);
+        }
+
         public async Task<IActionResult> Links(int limit, int page)
         {
             if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)

@@ -1,29 +1,34 @@
 @model Denok.Web.Modules.Link.Model.GenerateViewModel
 
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Custom Link";
 }
 
 <!-- Page Heading -->
-<h1 class="h3 mb-1 text-gray-800">Generate your beautiful short link</h1>
+<h1 class="h3 mb-1 text-gray-800">Create your custom beautiful short link</h1>
 
 <!-- Grow In Utility -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Link Generator</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Custom Link</h6>
     </div>
     <div class="card-body">
         <div class="mb-3">
             <code>Paste your original link here</code>
         </div>
-        <form class="user" asp-action="Generate" asp-controller="Link" method="post">
+        <form class="user" asp-action="GenerateCustom" asp-controller="Link" method="post">
             <div class="form-group">
-                <input asp-for="@Model.GenerateRequest.OriginalLink" type="text" name="originalLink" class="form-control"
+                <input asp-for="@Model.CustomLinkRequest.OriginalLink" type="text" name="originalLink" class="form-control"
                     id="originalLink" placeholder="your original link (eg: https://example.com/very-long-path-here)"/>
-                <span asp-validation-for="@Model.GenerateRequest.OriginalLink" class="text-danger"></span>
+                <span asp-validation-for="@Model.CustomLinkRequest.OriginalLink" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input asp-for="@Model.GenerateRequest.Description" type="text" name="description" class="form-control"
+                <input asp-for="@Model.CustomLinkRequest.CustomLink" type="text" name="customLink" class="form-control"
+                    id="customLink" placeholder="your custom link (eg: KeepItSimple)"/>
+                <span asp-validation-for="@Model.CustomLinkRequest.CustomLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="@Model.CustomLinkRequest.Description" type="text" name="description" class="form-control"
                     id="description" placeholder="description (optional)"/>
             </div>
             <input type="submit" value="Generate" class="btn btn-primary btn-block"/>

@@ -14,6 +14,8 @@ namespace Denok.Web.Modules.Link.Model
 
         public GenerateRequest GenerateRequest { get; set; }
 
+        public CustomLinkRequest CustomLinkRequest { get; set; }
+
         public string GeneratedLink { get; set; }
 
         public string ErrorMessage { get; set; }
