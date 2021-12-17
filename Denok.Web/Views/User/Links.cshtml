@@ -27,8 +27,10 @@
                         <th>Generated Link</th>
                         <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
+                        <th>Description</th>
                         <th>Created At</th>
                         <th>Created By</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -37,8 +39,10 @@
                         <th>Generated Link</th>
                         <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
+                        <th>Description</th>
                         <th>Created At</th>
                         <th>Created By</th>
+                        <th>Options</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -52,8 +56,22 @@
                             <td><label id="@cpSelector">@item.GeneratedLink</label></td>
                             <td><button class="btn btn-outline-primary" type="button" data-clipboard-action="copy" data-clipboard-target="#@cpSelector">Copy</button></td>
                             <td>@item.TotalVisits</td>
+                            
+                            @{
+                                string description = "";
+                                if (item.Description.Length > 10) 
+                                {
+                                    description = String.Format("{0}...", item.Description.Substring(0, 9));
+                                } else 
+                                {
+                                    description = item.Description;
+                                }
+                                <td>@description</td>
+                            }
+                            
                             <td>@item.CreatedAt</td>
                             <td>@item.CreatedBy</td>
+                            <td><a type="button" class="btn btn-outline-primary" asp-controller="User" asp-action="Link" asp-route-id="@item.Id">Detail</a></td>
                         </tr> 
                     }
                 </tbody>

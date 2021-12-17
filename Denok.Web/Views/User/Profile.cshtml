@@ -1,7 +1,7 @@
 @model Denok.Web.Modules.Link.Model.GenerateViewModel
 
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Profile";
 }
 <!-- Page Heading -->
     <h1 class="h3 mb-1 text-gray-800">Profile</h1>
@@ -17,9 +17,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">My Profile</h6>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3"><h6>Username: @Model.Profile.Username</h6></div>
-                    <div class="mb-3"><h6>Email: @Model.Profile.Email</h6></div>
-                    <div class="mb-3"><h6>Phone Number: @Model.Profile.PhoneNumber</h6></div>
+                    <div class="mb-3"><h6><label class="text-info">Username:</label> @Model.Profile.Username</h6></div>
+                    <div class="mb-3"><h6><label class="text-info">Email:</label> @Model.Profile.Email</h6></div>
+                    <div class="mb-3"><h6><label class="text-info">Phone Number:</label> @Model.Profile.PhoneNumber</h6></div>
                     
                 </div>
             </div>
