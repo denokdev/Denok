@@ -46,7 +46,7 @@ namespace Denok.Web.Controllers
                 return RedirectToAction("Dashboard", "User");
             }
 
-            return View(nameof(Index),loginRequest);
+            return View(nameof(Index), loginRequest);
         }
 
         [HttpGet]
@@ -67,9 +67,25 @@ namespace Denok.Web.Controllers
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
+            {
+                return RedirectToAction("Index", "Home");  
+            }
+
+            var userId = HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey);
+            var findByIdResult = await _userUsecase.GetProfile(userId);
+            if (findByIdResult.IsError())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = findByIdResult.Get();
+            var viewModel = new Modules.Link.Model.GenerateViewModel();
+            viewModel.Username = user.Username;
+            viewModel.ErrorViewModel = new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
+            return View(viewModel);
         }
     }
 }

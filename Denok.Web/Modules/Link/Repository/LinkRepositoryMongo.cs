@@ -131,5 +131,22 @@ namespace Denok.Web.Modules.Link.Repository
                 return Result<Model.Link, string>.From(null, e.ToString());
             }
         }
+
+        public async Task<Result<long, string>> Remove(string id)
+        {
+            try 
+            {   
+                var deleteResult = await _linkCollection.DeleteOneAsync(x => x.Id == id);
+                if (deleteResult.DeletedCount <= 0)
+                {
+                    return Result<long, string>.From(0, "document not found");
+                }
+
+                return Result<long, string>.From(deleteResult.DeletedCount, null);
+            } catch(Exception e)
+            {
+                return Result<long, string>.From(0, e.ToString());
+            }
+        }
     }
 }

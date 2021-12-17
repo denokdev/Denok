@@ -23,6 +23,8 @@ namespace Denok.Web.Modules.Link.Model
         public LinkListView LinkListView { get; set; }
 
         public LinkResponse LinkDetail { get; set; }
+
+        public Models.ErrorViewModel ErrorViewModel { get; set; }
         
     }
 }

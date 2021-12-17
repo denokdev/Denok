@@ -14,6 +14,8 @@ namespace Denok.Web.Modules.Link.Usecase
         
         Task<Result<Model.LinkResponse, string>> GetLink(string id);
 
+        Task<Result<Model.LinkResponse, string>> RemoveLink(string id);
+
         Task<Result<Model.LinkResponse, string>> GetLinkByGeneratedLink(string generatedLink);
 
         Task<Result<Model.LinkListView, string>> GetLinks(Model.LinkFilter linkFilter);
@@ -127,6 +129,24 @@ namespace Denok.Web.Modules.Link.Usecase
             }
 
             var linkResponse = new Model.LinkResponse(link);
+            return Result<Model.LinkResponse, string>.From(linkResponse, null);
+        }
+
+        public async Task<Result<Model.LinkResponse, string>> RemoveLink(string id)
+        {
+            var findByIdResult = await _linkRepository.FindById(id);
+            if (findByIdResult.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, findByIdResult.Error());
+            }
+
+            var deleteByIdResult = await _linkRepository.Remove(id);
+            if (deleteByIdResult.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, deleteByIdResult.Error());
+            }
+
+            var linkResponse = new Model.LinkResponse(findByIdResult.Get());
             return Result<Model.LinkResponse, string>.From(linkResponse, null);
         }
 

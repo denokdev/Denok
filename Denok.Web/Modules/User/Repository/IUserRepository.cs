@@ -8,6 +8,8 @@ namespace Denok.Web.Modules.User.Repository
     public interface IUserRepository
     {
         Task<Result<Model.User, string>> Save(Model.User user);
+
+        Task<Result<long, string>> Remove(string id);
         
         Task<Result<Model.User, string>> FindById(string id);
 

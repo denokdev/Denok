@@ -54,7 +54,13 @@
                                 var cpSelector = String.Format("l{0}", item.Id);
                             }
                             <td><label id="@cpSelector">@item.GeneratedLink</label></td>
-                            <td><button class="btn btn-outline-primary" type="button" data-clipboard-action="copy" data-clipboard-target="#@cpSelector">Copy</button></td>
+                            <td>
+                                <a data-clipboard-action="copy" data-clipboard-target="#@cpSelector" class="btn btn-primary btn-icon-split btn-lg">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-clipboard"></i>
+                                    </span>
+                                </a>
+                            </td>
                             <td>@item.TotalVisits</td>
                             
                             @{
@@ -74,7 +80,18 @@
                             
                             <td>@item.CreatedAt</td>
                             <td>@item.CreatedBy</td>
-                            <td><a type="button" class="btn btn-outline-primary" asp-controller="User" asp-action="Link" asp-route-id="@item.Id">Detail</a></td>
+                            <td>
+                                <a asp-controller="User" asp-action="Link" asp-route-id="@item.Id" class="btn btn-info btn-icon-split btn-lg">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info-circle"></i>
+                                    </span>
+                                </a>
+                                <a data-confirm="are you sure ?" asp-controller="User" asp-action="RemoveLink" asp-route-id="@item.Id" class="btn btn-danger btn-icon-split btn-lg">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </a>
+                            </td>
                         </tr> 
                     }
                 </tbody>

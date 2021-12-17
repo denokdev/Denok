@@ -75,7 +75,7 @@ namespace Denok.Web.Modules.User.Delivery
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Links(int limit, int page)
+        public async Task<IActionResult> Links(int limit, int page, Modules.Link.Model.GenerateViewModel viewModel)
         {
             if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
             {
@@ -90,7 +90,11 @@ namespace Denok.Web.Modules.User.Delivery
             }
 
             var user = findByIdResult.Get();
-            var viewModel = new Modules.Link.Model.GenerateViewModel();
+            if (viewModel == null)
+            {
+                viewModel = new Modules.Link.Model.GenerateViewModel();
+            }
+
             viewModel.Username = user.Username;
 
             var linkFilter = new Modules.Link.Model.LinkFilter();
@@ -181,7 +185,7 @@ namespace Denok.Web.Modules.User.Delivery
             viewModel.Username = user.Username;
 
             var findLinkByIdResult = await _linkUsecase.GetLink(id);
-            if (findByIdResult.IsError())
+            if (findLinkByIdResult.IsError())
             {
                 viewModel.ErrorMessage = "link detail empty or error";
                 return View(viewModel);
@@ -190,6 +194,34 @@ namespace Denok.Web.Modules.User.Delivery
             viewModel.LinkDetail = findLinkByIdResult.Get();
             
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> RemoveLink(string id)
+        {
+            if (HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey) == null)
+            {
+                return RedirectToAction("Index", "Home");  
+            }
+
+            var userId = HttpContext.Session.GetString(Utils.Constants.UserIdSessionKey);
+            var findByIdResult = await _userUsecase.GetProfile(userId);
+            if (findByIdResult.IsError())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = findByIdResult.Get();
+            var viewModel = new Modules.Link.Model.GenerateViewModel();
+            viewModel.Username = user.Username;
+
+            var removeResult = await _linkUsecase.RemoveLink(id);
+            if (removeResult.IsError())
+            {
+                viewModel.ErrorMessage = "link empty or error";
+                return RedirectToAction(nameof(Links), viewModel);
+            }
+            
+            return RedirectToAction(nameof(Links));
         }
     }
 }
