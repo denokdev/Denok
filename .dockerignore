@@ -16,3 +16,5 @@ elk/
 *.txt
 denokred/
 denokweb/
+assets/
+nginx/
