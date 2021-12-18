@@ -2,7 +2,7 @@
 
 A self hosted Link Shortener built with `dotnet`
 
-[<img src="./assets/denok_arch.png" width="400">](https://github.com/wuriyanto48/kece)
+[<img src="./assets/denok_arch.png" width="400">](https://github.com/wuriyanto48)
 <br/><br/>
 
 ### Requirements
@@ -45,3 +45,10 @@ CONTAINER ID   IMAGE            COMMAND                  CREATED       STATUS   
 Both `Web Dashboard` and `Redirector` will run on non standard `port`, so you need to use `reverse proxy` server like `nginx`.
 
 Open the `nginx` folder.
+
+### Screenshot
+[<img src="./assets/login.png" width="400">](https://github.com/wuriyanto48)
+[<img src="./assets/generate_random.png" width="400">](https://github.com/wuriyanto48)
+[<img src="./assets/generate_random_result.png" width="400">](https://github.com/wuriyanto48)
+[<img src="./assets/list.png" width="400">](https://github.com/wuriyanto48)
+[<img src="./assets/generate_custom.png" width="400">](https://github.com/wuriyanto48)
