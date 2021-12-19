@@ -1,5 +1,5 @@
 use std::net::{ SocketAddr };
-use actix_web::{get, web, App, HttpServer, HttpResponse};
+use actix_web::{ get, web, http, App, HttpServer, HttpResponse, middleware };
 
 use redirector::{ config, logger, database, modules };
 use modules::link::LinkRepository;
@@ -45,14 +45,16 @@ async fn main() {
 
     let server = match HttpServer::new(move || {
         App::new()
-        .data(app_param.clone())
-        .service(index)
-        .service(redirect)
+            .wrap(middleware::Logger::default())
+            .wrap(middleware::Logger::new("%a %{User-Agent}i"))
+            .data(app_param.clone())
+            .service(index)
+            .service(redirect)
     })
     .bind(addr) {
         Ok(s) => s,
         Err(_) => {
-            println!("error bind http server");
+            println!("error bind http server port");
             std::process::exit(1);
         }
     };
@@ -67,19 +69,20 @@ async fn main() {
 async fn index(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>) -> HttpResponse {
     let app_config = &param.config;
     let mut response = HttpResponse::MovedPermanently();
-    response.set_header(actix_web::http::header::LOCATION, app_config.domain_not_found.clone());
+    response.set_header(http::header::LOCATION, app_config.domain_not_found.clone());
     response.finish()
 }
 
 #[get("/{code}")]
-async fn redirect(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>, web::Path(code): web::Path<String>) -> HttpResponse {
+async fn redirect(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>, 
+    web::Path(code): web::Path<String>) -> HttpResponse {
     let app_config = &param.config;
     let link_repository = &param.link_repository;
 
     let is_code_empty = code.is_empty();
     let mut response = HttpResponse::MovedPermanently();
     if is_code_empty {
-        response.set_header(actix_web::http::header::LOCATION, app_config.domain_not_found.clone());
+        response.set_header(http::header::LOCATION, app_config.domain_not_found.clone());
         return response.finish();
     }
 
@@ -87,7 +90,7 @@ async fn redirect(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>
         Ok(d) => d,
         Err(e) => {
             logger::error!("error link_repository.find_by_generated_link: {}", e);
-            response.set_header(actix_web::http::header::LOCATION, app_config.domain_not_found.clone());
+            response.set_header(http::header::LOCATION, app_config.domain_not_found.clone());
             return response.finish();
         }
     };
@@ -100,12 +103,12 @@ async fn redirect(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>
 
     if link.original_link.is_none() {
         logger::error!("error link.original_link.is_none()");
-            response.set_header(actix_web::http::header::LOCATION, app_config.domain_not_found.clone());
+            response.set_header(http::header::LOCATION, app_config.domain_not_found.clone());
             return response.finish();
     }
 
     let redirect_to = link.original_link.unwrap();
     logger::info!("redirect to {}", redirect_to);
-    response.set_header(actix_web::http::header::LOCATION, redirect_to);
+    response.set_header(http::header::LOCATION, redirect_to);
     response.finish()
 }
