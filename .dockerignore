@@ -18,4 +18,4 @@ denokred/
 denokweb/
 assets/
 nginx/
-target/
+denok-redirector-rs/target/
