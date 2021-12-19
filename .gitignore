@@ -28,3 +28,4 @@ volumes/
 *.db
 denokred/
 denokweb/
+target/
