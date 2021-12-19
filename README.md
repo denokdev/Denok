@@ -1,6 +1,6 @@
 # Denok
 
-A self hosted Link Shortener built with `dotnet`
+A self hosted Link Shortener built with `Dotnet (C#)` and `Rust`
 
 [<img src="./assets/denok_arch.png" width="400">](https://github.com/wuriyanto48)
 <br/><br/>
