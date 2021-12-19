@@ -15,7 +15,7 @@ services:
   denokred:
     build:
       context: .
-      dockerfile: ./Denok.Redirector/Dockerfile
+      dockerfile: ./denok-redirector-rs/Dockerfile
     ports:
       - "9011:9011"
     depends_on:
