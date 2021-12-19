@@ -19,7 +19,7 @@ impl Config {
             return Err(String::from("error loading .env file"));
         }
 
-        let host: [u8; 4] = [127, 0, 0, 1];
+        let host: [u8; 4] = [0, 0, 0, 0];
 
         if env::var("HTTP_PORT_REDIRECTOR").is_err() {
             return Err(String::from("error loading HTTP_PORT_REDIRECTOR"));
