@@ -7,6 +7,7 @@ A self hosted Link Shortener built with `Dotnet (C#)` and `Rust`
 
 ### Requirements
 - Dotnet https://dotnet.microsoft.com/en-us/download
+- Rust (`rustc` version 1.50+) https://www.rust-lang.org/tools/install
 - Docker and `docker-compose` https://www.docker.com/community/open-source
 
 ### Preparation
