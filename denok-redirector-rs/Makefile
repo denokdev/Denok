@@ -7,7 +7,7 @@ build-docker:
 	docker build -f Dockerfile -t denokred ..
 
 build-local:
-	rm -rf target/ && cargo build
+	cargo build
 
 build-release:
 	cargo build --release
