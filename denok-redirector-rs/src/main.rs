@@ -2,11 +2,9 @@ use std::net::{ SocketAddr };
 use actix_web::{ get, web, http, App, HttpServer, HttpResponse, middleware };
 
 use redirector::{ config, logger, database, modules };
-use modules::link::LinkRepository;
 
-#[derive(Clone)]
-struct AppParam<L: modules::link::LinkRepository> {
-    link_repository: L,
+struct AppParam {
+    link_repository: std::sync::Arc<dyn modules::link::LinkRepository + Send + Sync + 'static>,
     config: config::Config
 }
 
@@ -33,7 +31,7 @@ async fn main() {
         }
     };
 
-    let link_repository = modules::link::LinkRepositoryMongo::new(database);
+    let link_repository = std::sync::Arc::new(modules::link::LinkRepositoryMongo::new(database));
 
     let addr = SocketAddr::from((config.host, config.port));
 
@@ -43,11 +41,13 @@ async fn main() {
         config: config
     };
 
+    let app_data = web::Data::new(app_param);
+
     let server = match HttpServer::new(move || {
         App::new()
             .wrap(middleware::Logger::default())
             .wrap(middleware::Logger::new("%a %{User-Agent}i"))
-            .data(app_param.clone())
+            .app_data(app_data.clone())
             .service(index)
             .service(redirect)
     })
@@ -66,7 +66,7 @@ async fn main() {
 }
 
 #[get("/")]
-async fn index(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>) -> HttpResponse {
+async fn index(param: web::Data<AppParam>) -> HttpResponse {
     let app_config = &param.config;
     let mut response = HttpResponse::MovedPermanently();
     response.set_header(http::header::LOCATION, app_config.domain_not_found.clone());
@@ -74,7 +74,7 @@ async fn index(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>) -
 }
 
 #[get("/{code}")]
-async fn redirect(param: web::Data<AppParam<modules::link::LinkRepositoryMongo>>, 
+async fn redirect(param: web::Data<AppParam>, 
     web::Path(code): web::Path<String>) -> HttpResponse {
     let app_config = &param.config;
     let link_repository = &param.link_repository;
