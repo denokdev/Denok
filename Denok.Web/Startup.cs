@@ -55,21 +55,8 @@ namespace Denok.Web
                 app.UseHsts();
             }
 
-            app.Use(next => context =>
-            {
-                context.Response.OnStarting(() =>
-                {
-                    if (context.Response.StatusCode == 405)
-                    {
-                        context.Response.StatusCode = 404;
-                        context.Request.Path = "/Error/PageNotFound";
-                    }
-
-                    return Task.CompletedTask;
-                });
-
-                return next(context);
-            });
+            // handler error such as method not allowed, and etc
+            app.UseStatusCodePagesWithRedirects("/Error/PageNotFound");
 
             app.Use(async (context, next) =>
             {
