@@ -46,6 +46,11 @@ namespace Denok.Web.Utils
             TimeZoneInfo seAsiaTz = 
                 TimeZoneInfo.FindSystemTimeZoneById(Lib.Shared.Constants.SEAsiaStandardTime);
             return TimeZoneInfo.ConvertTimeFromUtc(dateTime, seAsiaTz);
+        }
+
+        public static string DateTimeToStringFormated(DateTime dateTime)
+        {
+            return dateTime.ToString(Lib.Shared.Constants.DateTimeFormat);
         }	
     }
 }
