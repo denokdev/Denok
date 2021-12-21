@@ -97,6 +97,7 @@ async fn redirect(param: web::Data<AppParam>,
 
     // up total visits
     link.total_visits = link.total_visits + 1;
+    link.updated_at = mongodb::bson::DateTime::now();
     if let Err(e) = link_repository.update(&code, &link) {
         logger::error!("link_repository.update {}", e);
     }
