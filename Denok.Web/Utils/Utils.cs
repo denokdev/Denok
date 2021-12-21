@@ -48,7 +48,7 @@ namespace Denok.Web.Utils
             return TimeZoneInfo.ConvertTimeFromUtc(dateTime, seAsiaTz);
         }
 
-        public static string DateTimeToStringFormated(DateTime dateTime)
+        public static string DateTimeToStringFormatted(DateTime dateTime)
         {
             return dateTime.ToString(Lib.Shared.Constants.DateTimeFormat);
         }	
