@@ -61,11 +61,6 @@ namespace Denok.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult About()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Error()
         {
