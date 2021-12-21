@@ -121,6 +121,7 @@ namespace Denok.Web.Modules.Link.Usecase
 
             var link = findByResult.Get();
             link.TotalVisits = link.TotalVisits + 1;
+            link.UpdatedAt = DateTime.Now;
             Console.WriteLine(String.Format("Link {0} | Total visits : {1}", generatedLink, link.TotalVisits));
             var updateResults = await _linkRepository.Update(generatedLink, link);
             if (updateResults.IsError())
