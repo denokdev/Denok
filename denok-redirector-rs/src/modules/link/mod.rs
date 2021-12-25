@@ -1,5 +1,5 @@
 use mongodb::{ sync::Database, sync::Collection };
-use serde::{Deserialize, Serialize};
+use serde::{ Deserialize, Serialize };
 use crate::{ logger };
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -52,7 +52,7 @@ impl LinkRepository for LinkRepositoryMongo {
         //         return Err(String::from("error: find data by generatedLink"));
         //     }
         // };
-        
+
         let data = match self.collection.find_one(mongodb::bson::doc!{"generatedLink" : code}, None) {
             Ok(d) => d,
             Err(e) => {
