@@ -34,5 +34,8 @@ namespace Denok.Web.Modules.Link.Model
 
         [JsonPropertyName("description")]
         public string Description { get; set; }
+
+        [JsonPropertyName("qrBase64")]
+        public string QrBase64 { get; set; }
     }
 }

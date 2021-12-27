@@ -1,9 +1,12 @@
 using System;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Denok.Lib.Shared;
+using Denok.Lib.Ext;
+using Denok.Lib.Qr;
 
 namespace Denok.Web.Modules.Link.Usecase
 {
@@ -68,7 +71,17 @@ namespace Denok.Web.Modules.Link.Usecase
                 return Result<Model.LinkResponse, string>.From(null, findByIdResult.Error());
             }
 
-            var linkResponse = new Model.LinkResponse(findByIdResult.Get());
+            var link = findByIdResult.Get();
+            var linkResponse = new Model.LinkResponse(link);
+
+            // generate qr code
+            var generateQrResult = await QrGenerator.Generate(linkResponse.GeneratedLink);
+            if (generateQrResult.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, findByIdResult.Error());
+            }
+
+            linkResponse.QrBase64 = generateQrResult.Get().ToBase64Str(System.Drawing.Imaging.ImageFormat.Png);
             return Result<Model.LinkResponse, string>.From(linkResponse, null);
         }
 
