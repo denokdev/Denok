@@ -27,9 +27,7 @@
                         <th>Generated Link</th>
                         <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
-                        <th>Description</th>
                         <th>Created At</th>
-                        <th>Created By</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -39,9 +37,7 @@
                         <th>Generated Link</th>
                         <th>Copy To Clipboard</th>
                         <th>Total Visits</th>
-                        <th>Description</th>
                         <th>Created At</th>
-                        <th>Created By</th>
                         <th>Options</th>
                     </tr>
                 </tfoot>
@@ -63,23 +59,7 @@
                             </td>
                             <td>@item.TotalVisits</td>
                             
-                            @{
-                                string description = "";
-                                if (item.Description != null)
-                                {
-                                    if (item.Description.Length > 10) 
-                                    {
-                                        description = String.Format("{0}...", item.Description.Substring(0, 9));
-                                    } else 
-                                    {
-                                        description = item.Description;
-                                    }
-                                }
-                                <td>@description</td>
-                            }
-                            
                             <td>@Denok.Web.Utils.Utils.DateTimeToStringFormatted(item.CreatedAt)</td>
-                            <td>@item.CreatedBy</td>
                             <td>
                                 <a asp-controller="User" asp-action="Link" asp-route-id="@item.Id" class="btn btn-info btn-icon-split btn-lg">
                                     <span class="icon text-white-50">

@@ -75,7 +75,7 @@ namespace Denok.Web.Modules.Link.Usecase
             var linkResponse = new Model.LinkResponse(link);
 
             // generate qr code
-            var generateQrResult = await QrGenerator.Generate(linkResponse.GeneratedLink);
+            var generateQrResult = await QrGenerator.Generate(linkResponse.GeneratedLink, Config.AppConfig.QrLogo);
             if (generateQrResult.IsError())
             {
                 return Result<Model.LinkResponse, string>.From(null, findByIdResult.Error());

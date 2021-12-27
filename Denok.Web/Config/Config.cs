@@ -24,6 +24,8 @@ namespace Denok.Web.Config
         public static string DomainName;
         public static string DomainNotFound;
 
+        public static string QrLogo;
+
         public static void Init()
         {
             DotNetEnv.Env.Load();
@@ -41,6 +43,8 @@ namespace Denok.Web.Config
 
                 InitDomainName();
                 InitDomainNotFound();
+
+                InitQrLogo();
             } catch(InvalidConfigException ex)
             {
                 throw ex;
@@ -117,7 +121,7 @@ namespace Denok.Web.Config
             DomainName = Environment.GetEnvironmentVariable("DOMAIN_NAME");
         }
 
-         private static void InitDomainNotFound()
+        private static void InitDomainNotFound()
         {
             if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("DOMAIN_NOT_FOUND")))
             {
@@ -125,6 +129,16 @@ namespace Denok.Web.Config
             }
 
             DomainNotFound = Environment.GetEnvironmentVariable("DOMAIN_NOT_FOUND");
+        }
+
+        private static void InitQrLogo() 
+        {
+            if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("QR_LOGO")))
+            {
+                throw new InvalidConfigException("QR_LOGO cannot be empty");
+            }
+
+            QrLogo = Environment.GetEnvironmentVariable("QR_LOGO");
         }
     }
 }
