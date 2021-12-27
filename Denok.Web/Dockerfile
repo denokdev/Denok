@@ -39,6 +39,8 @@ COPY .env.${DIST_ENVIRONMENT} ${APP_PATH}/.env
 
 COPY --from=build /source/denokweb ${APP_PATH}/
 
+RUN apt-get update && apt-get install -y apt-utils libgdiplus libc6-dev
+
 # ENV ASPNETCORE_URLS http://0.0.0.0:9010
 
 EXPOSE 9010
