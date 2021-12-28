@@ -17,18 +17,18 @@ impl Mongo {
     pub fn connect(&self) -> Result<Database, String> {
         let mut client_opts = match ClientOptions::parse(&self.connection_string) {
             Ok(c) => c,
-            Err(e) => return Err(String::from(format!("error parsing mongo connection str {}", e)))
+            Err(e) => return Err(String::from(format!("error parsing mongo connection str {:?}", e)))
         };
-        
+
         client_opts.app_name = Some(String::from("denok-redirector-rs"));
         let client = match Client::with_options(client_opts) {
             Ok(c) => c,
-            Err(e) => return Err(String::from(format!("error create mongodb client {}", e)))
+            Err(e) => return Err(String::from(format!("error create mongodb client {:?}", e)))
         };
-    
+
         let database = client.database(&self.database_name);
-    
+
         Ok(database)
-    
+
     }
 }

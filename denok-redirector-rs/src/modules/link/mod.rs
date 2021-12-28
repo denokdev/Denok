@@ -37,13 +37,13 @@ impl LinkRepositoryMongo {
 impl LinkRepository for LinkRepositoryMongo {
     fn find_by_generated_link(&self, code: &String) -> Result<Link, String> {
         // case-insensitive: generatedLink
-        
+
         // let data = match self.collection.find_one(
         //     mongodb::bson::doc!{
         //         "generatedLink" : mongodb::bson::doc!{
         //             "$regex": format!("^{}$", code), "$options": "i"
         //         }
-        //     }, 
+        //     },
         //     None
         // ) {
         //     Ok(d) => d,
@@ -56,11 +56,11 @@ impl LinkRepository for LinkRepositoryMongo {
         let data = match self.collection.find_one(mongodb::bson::doc!{"generatedLink" : code}, None) {
             Ok(d) => d,
             Err(e) => {
-                logger::error!("find_by_generated_link: {}", e);
+                logger::error!("find_by_generated_link: {:?}", e);
                 return Err(String::from("error: find data by generatedLink"));
             }
         };
-    
+
         if data.is_none() {
             return Err(String::from("error data not found"));
         }
@@ -71,7 +71,7 @@ impl LinkRepository for LinkRepositoryMongo {
 
     fn update<'l>(&self, code: &String, link: &'l Link) -> Result<&'l Link, String> {
         if let Err(e) = self.collection.replace_one(mongodb::bson::doc!{"generatedLink" : code}, link, None) {
-            logger::error!("update: {}", e);
+            logger::error!("update: {:?}", e);
             return Err(String::from("error update link"));
         }
 

@@ -48,7 +48,7 @@ impl Config {
         let domain_not_found = env::var("DOMAIN_NOT_FOUND").unwrap();
 
         // --------------------------------------------
-    
+
         if env::var("MONGO_DB_CONNNECTION_READ").is_err() {
             return Err(String::from("error loading MONGO_DB_CONNNECTION_READ"));
         }
@@ -82,14 +82,14 @@ impl Config {
         // --------------------------------------------
 
         Ok(Config {
-            host: host,
-            port: port,
-            domain_name: domain_name,
-            domain_not_found: domain_not_found,
-            mongo_db_connection_read: mongo_db_connection_read,
-            mongo_db_name_read: mongo_db_name_read,
-            mongo_db_connection_write: mongo_db_connection_write,
-            mongo_db_name_write: mongo_db_name_write
+            host,
+            port,
+            domain_name,
+            domain_not_found,
+            mongo_db_connection_read,
+            mongo_db_name_read,
+            mongo_db_connection_write,
+            mongo_db_name_write
         })
 
     }

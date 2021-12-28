@@ -12,7 +12,7 @@ struct AppParam {
 async fn main() {
     // init logger
     logger::init_logger();
-    
+
     let config = match config::Config::new() {
         Ok(c) => c,
         Err(e) => {
@@ -37,8 +37,8 @@ async fn main() {
 
     // prepare app data
     let app_param = AppParam {
-        link_repository: link_repository,
-        config: config
+        link_repository,
+        config
     };
 
     let app_data = web::Data::new(app_param);
@@ -74,7 +74,7 @@ async fn index(param: web::Data<AppParam>) -> HttpResponse {
 }
 
 #[get("/{code}")]
-async fn redirect(param: web::Data<AppParam>, 
+async fn redirect(param: web::Data<AppParam>,
     web::Path(code): web::Path<String>) -> HttpResponse {
     let app_config = &param.config;
     let link_repository = &param.link_repository;
