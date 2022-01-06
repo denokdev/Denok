@@ -10,12 +10,12 @@ using Denok.Web.Modules.User.Model;
 
 namespace Denok.Web.Modules.User.Repository
 {
-    public class UserRopositoryMongo : IUserRepository
+    public class UserRepositoryMongo : IUserRepository
     {
-        private readonly ILogger<UserRopositoryMongo> _logger;
+        private readonly ILogger<UserRepositoryMongo> _logger;
         private readonly IMongoCollection<Model.User> _userCollection;
 
-        public UserRopositoryMongo(ILogger<UserRopositoryMongo> logger, IMongo mongo)
+        public UserRepositoryMongo(ILogger<UserRepositoryMongo> logger, IMongo mongo)
         {
             _logger = logger;
             _userCollection = mongo.Database().GetCollection<Model.User>("users");

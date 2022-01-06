@@ -10,12 +10,12 @@ using Denok.Web.Modules.Link.Model;
 
 namespace Denok.Web.Modules.Link.Repository
 {
-    public class LinkRopositoryMongo : ILinkRepository
+    public class LinkRepositoryMongo : ILinkRepository
     {
-        private readonly ILogger<LinkRopositoryMongo> _logger;
+        private readonly ILogger<LinkRepositoryMongo> _logger;
         private readonly IMongoCollection<Model.Link> _linkCollection;
 
-        public LinkRopositoryMongo(ILogger<LinkRopositoryMongo> logger, IMongo mongo)
+        public LinkRepositoryMongo(ILogger<LinkRepositoryMongo> logger, IMongo mongo)
         {
             _logger = logger;
             _linkCollection = mongo.Database().GetCollection<Model.Link>("links");

@@ -119,13 +119,13 @@ namespace Denok.Web
 
         private static void RegisterUserModule(IServiceCollection services)
         {
-            services.AddSingleton<Modules.User.Repository.IUserRepository, Modules.User.Repository.UserRopositoryMongo>();
+            services.AddSingleton<Modules.User.Repository.IUserRepository, Modules.User.Repository.UserRepositoryMongo>();
             services.AddSingleton<Modules.User.Usecase.IUserUsecase, Modules.User.Usecase.UserUsecase>();
         }
 
         private static void RegisterLinkModule(IServiceCollection services)
         {
-            services.AddSingleton<Modules.Link.Repository.ILinkRepository, Modules.Link.Repository.LinkRopositoryMongo>();
+            services.AddSingleton<Modules.Link.Repository.ILinkRepository, Modules.Link.Repository.LinkRepositoryMongo>();
             services.AddSingleton<Modules.Link.Usecase.ILinkUsecase, Modules.Link.Usecase.LinkUsecase>();
         }
     }

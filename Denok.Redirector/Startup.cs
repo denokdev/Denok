@@ -96,7 +96,7 @@ namespace Denok.Redirector
 
         private static void RegisterLinkModule(IServiceCollection services)
         {
-            services.AddSingleton<Denok.Web.Modules.Link.Repository.ILinkRepository, Denok.Web.Modules.Link.Repository.LinkRopositoryMongo>();
+            services.AddSingleton<Denok.Web.Modules.Link.Repository.ILinkRepository, Denok.Web.Modules.Link.Repository.LinkRepositoryMongo>();
             services.AddSingleton<Denok.Web.Modules.Link.Usecase.ILinkUsecase, Denok.Web.Modules.Link.Usecase.LinkUsecase>();
         }
     }
