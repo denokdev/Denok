@@ -41,11 +41,17 @@ namespace Denok.Web.Utils
             return false;
         }
 
-        public static DateTime ConvertDateTimeToLocalTimeZone(DateTime dateTime)
+        public static DateTime? ConvertDateTimeToLocalTimeZone(DateTime dateTime)
         {
-            TimeZoneInfo seAsiaTz = 
-                TimeZoneInfo.FindSystemTimeZoneById(Lib.Shared.Constants.SEAsiaStandardTime);
-            return TimeZoneInfo.ConvertTimeFromUtc(dateTime, seAsiaTz);
+            try 
+            {
+                TimeZoneInfo seAsiaTz = 
+                    TimeZoneInfo.FindSystemTimeZoneById(Lib.Shared.Constants.SEAsiaStandardTime);
+                return TimeZoneInfo.ConvertTimeFromUtc(dateTime, seAsiaTz);    
+            } catch(Exception) 
+            {
+                return null;
+            }
         }
 
         public static string DateTimeToStringFormatted(DateTime dateTime)
