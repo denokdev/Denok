@@ -100,13 +100,11 @@ namespace Denok.Web.Modules.User.Delivery
             var linkFilter = new Modules.Link.Model.LinkFilter();
             if (limit > 0)
             {
-                Console.WriteLine(String.Format("Limit: {0}", limit));
                 linkFilter.Limit = (uint) limit;
             }
 
             if (page > 0)
             {
-                Console.WriteLine(String.Format("Page: {0}", page));
                 linkFilter.Page = (uint) page;
             }
 

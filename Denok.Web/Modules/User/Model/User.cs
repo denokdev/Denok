@@ -9,8 +9,8 @@ namespace Denok.Web.Modules.User.Model
 
         public User()
         {
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         public User(string username, string email, string phoneNumber, string password)
@@ -20,8 +20,8 @@ namespace Denok.Web.Modules.User.Model
             PhoneNumber = phoneNumber;
             Password = password;
 
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }
 
         [BsonElement("username")]

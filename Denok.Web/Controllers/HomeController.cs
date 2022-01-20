@@ -40,7 +40,6 @@ namespace Denok.Web.Controllers
                 }
 
                 var user = loginResult.Get();
-                Console.WriteLine(user.Username);
                 HttpContext.Session.SetString(Utils.Constants.UserIdSessionKey, user.Id);
 
                 return RedirectToAction("Dashboard", "User");

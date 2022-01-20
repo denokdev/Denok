@@ -1,9 +1,11 @@
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -55,17 +57,39 @@ namespace Denok.Web
                 app.UseHsts();
             }
 
-            // handler error such as method not allowed, and etc
-            app.UseStatusCodePagesWithRedirects("/Error/PageNotFound");
-
-            app.Use(async (context, next) =>
-            {
-                await next();
-                if (context.Response.StatusCode == 404)
+            // add middleware
+            app.UseWhen(context => {
+                // return Regex.Match(context.Request.Path.Value, @"\/api\/\w+").Success;
+                return context.Request.Path.StartsWithSegments("/api");
+            }, appBuilder => {
+                appBuilder.UseMiddleware<Middleware.BasicAuthMiddleware>();
+                appBuilder.UseStatusCodePages(Middleware.CustomErrorMiddleware.Handle404);
+                appBuilder.Use(async (context, next) =>
                 {
-                    context.Request.Path = "/Error/PageNotFound";
                     await next();
-                }
+                    if (context.Response.StatusCode == 404)
+                    {
+                        context.Request.Path = "/api/not-found";
+                        await next();
+                    }
+                });
+            });
+
+             app.UseWhen(context => {
+                return !context.Request.Path.StartsWithSegments("/api");
+            }, appBuilder => {
+                 // handler error such as method not allowed, and etc
+                appBuilder.UseStatusCodePagesWithRedirects("/Error/PageNotFound");
+
+                appBuilder.Use(async (context, next) =>
+                {
+                    await next();
+                    if (context.Response.StatusCode == 404)
+                    {
+                        context.Request.Path = "/Error/PageNotFound";
+                        await next();
+                    }
+                });
             });
 
             // app.UseHttpsRedirection();
@@ -80,10 +104,36 @@ namespace Denok.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapGet("/api", IndexApi);
+                endpoints.MapGet("/api/not-found", NotFoundApi);
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private static async Task IndexApi(HttpContext context)
+        {
+            await context.Response.WriteAsJsonAsync(
+                new Denok.Lib.Shared.Response<Lib.Shared.EmptyJson> (
+                    success: true,
+                    code: 200,
+                    message: "service up and running",
+                    data: new Lib.Shared.EmptyJson()
+                )
+            );
+        }
+
+        private static async Task NotFoundApi(HttpContext context)
+        {
+            await context.Response.WriteAsJsonAsync(
+                new Denok.Lib.Shared.Response<Lib.Shared.EmptyJson> (
+                    success: false,
+                    code: 404,
+                    message: "resource not found",
+                    data: new Lib.Shared.EmptyJson()
+                )
+            );
         }
 
         // register API Controller
