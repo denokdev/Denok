@@ -24,6 +24,9 @@ namespace Denok.Web.Config
         public static string DomainName;
         public static string DomainNotFound;
 
+        public static string BasicAuthUsername;
+        public static string BasicAuthPassword;
+
         public static string QrLogo;
 
         public static void Init()
@@ -43,6 +46,9 @@ namespace Denok.Web.Config
 
                 InitDomainName();
                 InitDomainNotFound();
+
+                InitBasicAuthUsername();
+                InitBasicAuthPassword();
 
                 InitQrLogo();
             } catch(InvalidConfigException ex)
@@ -129,6 +135,26 @@ namespace Denok.Web.Config
             }
 
             DomainNotFound = Environment.GetEnvironmentVariable("DOMAIN_NOT_FOUND");
+        }
+
+        private static void InitBasicAuthUsername()
+        {
+            if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BASIC_AUTH_USERNAME")))
+            {
+                throw new InvalidConfigException("BASIC_AUTH_USERNAME cannot be empty");
+            }
+
+            BasicAuthUsername = Environment.GetEnvironmentVariable("BASIC_AUTH_USERNAME");
+        }
+
+        private static void InitBasicAuthPassword()
+        {
+            if(string.IsNullOrEmpty(Environment.GetEnvironmentVariable("BASIC_AUTH_PASSWORD")))
+            {
+                throw new InvalidConfigException("BASIC_AUTH_PASSWORD cannot be empty");
+            }
+
+            BasicAuthPassword = Environment.GetEnvironmentVariable("BASIC_AUTH_PASSWORD");
         }
 
         private static void InitQrLogo() 
