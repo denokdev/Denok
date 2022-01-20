@@ -38,10 +38,10 @@
                         <div class="mb-3"><h6><label class="text-info">Original Link:</label> @Model.LinkDetail.OriginalLink</h6></div>
                         <div class="mb-3"><h6><label class="text-info">Total Visits:</label> @Model.LinkDetail.TotalVisits</h6></div>
                         <div class="mb-3"><h6><label class="text-info">Description:</label> @Model.LinkDetail.Description</h6></div>
-                        <div class="mb-3"><h6><label class="text-info">Created At:</label> @Denok.Web.Utils.Utils.DateTimeToStringFormatted(Model.LinkDetail.CreatedAt)</h6></div>
-                        @if (Model.LinkDetail.UpdatedAt.CompareTo(Model.LinkDetail.CreatedAt) != 0)
+                        <div class="mb-3"><h6><label class="text-info">Created At:</label> @Denok.Web.Utils.Utils.DateTimeToStringFormatted(Model.LinkDetail.CreatedAt??DateTime.Now)</h6></div>
+                        @if (Model.LinkDetail.UpdatedAt.Value.CompareTo(Model.LinkDetail.CreatedAt.Value) != 0)
                         {
-                            <div class="mb-3"><h6><label class="text-info">Last visit:</label> @Denok.Web.Utils.Utils.DateTimeToStringFormatted(Model.LinkDetail.UpdatedAt)</h6></div>   
+                            <div class="mb-3"><h6><label class="text-info">Last visit:</label> @Denok.Web.Utils.Utils.DateTimeToStringFormatted(Model.LinkDetail.UpdatedAt??DateTime.Now)</h6></div>   
                         }
                         <div class="mb-3"><button class="btn btn-outline-secondary" type="button" data-clipboard-action="copy" data-clipboard-target="#outputLink">Copy</button></div>
                         
