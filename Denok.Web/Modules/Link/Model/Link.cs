@@ -9,8 +9,8 @@ namespace Denok.Web.Modules.Link.Model
     {
         public Link()
         {
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         } 
 
         public Link(string originalLink, string generatedLink)
@@ -18,8 +18,8 @@ namespace Denok.Web.Modules.Link.Model
             OriginalLink = originalLink;
             GeneratedLink = generatedLink;
 
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
         }  
 
         public Link(string originalLink, string generatedLink, string createdBy)
@@ -27,8 +27,8 @@ namespace Denok.Web.Modules.Link.Model
             OriginalLink = originalLink;
             GeneratedLink = generatedLink;
 
-            CreatedAt = DateTime.Now;
-            UpdatedAt = DateTime.Now;
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
             CreatedBy = createdBy;
         } 
 
