@@ -1,0 +1,61 @@
+{
+	"variables": [],
+	"info": {
+		"name": "DenokApi",
+		"_postman_id": "eaa4e38a-99db-eb17-e074-d66a693b6dff",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "generate link",
+			"request": {
+				"url": "{{BASE_URL}}/api/links/generate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{BASIC_AUTH}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"originalLink\": \"https://www.tokopedia.com/samuderasports/google-pixel-6-pro-5g-128-256-512-gb-mmwave-versi-g8v0u-termasuk-pajak-white-bnob-128-gb?src=topads\",\n\t\"description\": \"hape baru\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "generate custom link",
+			"request": {
+				"url": "{{BASE_URL}}/api/links/generate-custom",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{BASIC_AUTH}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"originalLink\": \"https://www.youtube.com/watch?v=fJ4hCWwOCAI\",\n\t\"customLink\": \"mayday\",\n\t\"description\": \"test\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
