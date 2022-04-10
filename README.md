@@ -29,6 +29,12 @@ For build and run, simply `run`
 $ docker-compose up -d
 ```
 
+### Login Admin
+```
+username: user
+password: 12345
+```
+
 ### Inspect
 Two Denok component will run in the different processes, `Web Dashboard` will run on port `9010` 
 and `Redirector` will run on port `9011`.
