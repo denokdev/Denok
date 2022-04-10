@@ -62,6 +62,7 @@ If you want to use your own `QR Code logo`, first convert your image file logo t
 [<img src="./assets/generate_random_result.png" width="400">](https://github.com/wuriyanto48)
 [<img src="./assets/list.png" width="400">](https://github.com/wuriyanto48)
 [<img src="./assets/generate_custom.png" width="400">](https://github.com/wuriyanto48)
+[<img src="./assets/qr_code_link.png" width="400">](https://github.com/wuriyanto48)
 
 ### Bootstrap template
 https://github.com/startbootstrap/startbootstrap-sb-admin-2
