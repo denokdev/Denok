@@ -53,6 +53,9 @@ Both `Web Dashboard` and `Redirector` will run on non standard `port`, so you ne
 
 Open the `nginx` folder.
 
+### QR Code Logo
+If you want to use your own `QR Code logo`, first convert your image file logo to `base64` text format, and then copy and replace it into the `QR_LOGO` env variable from the  `.env.development` file
+
 ### Screenshot
 [<img src="./assets/login.png" width="400">](https://github.com/wuriyanto48)
 [<img src="./assets/generate_random.png" width="400">](https://github.com/wuriyanto48)
