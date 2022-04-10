@@ -1,6 +1,6 @@
 # Denok
 
-A self hosted Link Shortener built with `Dotnet (C#)` and `Rust`
+A self hosted Link Shortener built with `Dotnet (C#)` and `Rust`, as an alternative to services like `bitly`.
 
 [<img src="./assets/denok_arch.png" width="400">](https://github.com/wuriyanto48)
 <br/><br/>
