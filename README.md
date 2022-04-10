@@ -53,3 +53,6 @@ Open the `nginx` folder.
 [<img src="./assets/generate_random_result.png" width="400">](https://github.com/wuriyanto48)
 [<img src="./assets/list.png" width="400">](https://github.com/wuriyanto48)
 [<img src="./assets/generate_custom.png" width="400">](https://github.com/wuriyanto48)
+
+### Bootstrap template
+https://github.com/startbootstrap/startbootstrap-sb-admin-2
