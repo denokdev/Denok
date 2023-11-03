@@ -60,6 +60,16 @@ namespace Denok.Web.Modules.Link.Usecase
             }
 
             var linkResponse = new Model.LinkResponse(saveResult.Get());
+
+            // generate qr code
+            var generateQrResult = await QrGenerator.Generate(linkResponse.GeneratedLink, Config.AppConfig.QrLogo);
+            if (generateQrResult.IsError())
+            {
+                return Result<Model.LinkResponse, string>.From(null, generateQrResult.Error());
+            }
+
+            linkResponse.QrBase64 = generateQrResult.Get().ToBase64Str(System.Drawing.Imaging.ImageFormat.Png);
+            
             return Result<Model.LinkResponse, string>.From(linkResponse, null);
         }
 
